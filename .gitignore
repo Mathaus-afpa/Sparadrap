@@ -3,7 +3,8 @@
 !*.gitignore
 # Unignore directories so we can navigate to them
 !*/
-
+# Ignore specifics folders
+.idea/
 # Unignore src directories in any subdirectories
 !/src/
 !/analyse/
