@@ -1,5 +1,6 @@
 package sparadrap.views;
 import sparadrap.models.ModeleApplication;
+import sparadrap.views.pages.ManagerDesPages;
 import javax.swing.*;
 import java.awt.*;
 /**
@@ -19,6 +20,7 @@ public class VueApplication {
     private static final JFrame fenetrePrincipale = new JFrame(ModeleApplication.APP_TITRE + " - " + ModeleApplication.APP_VERSION);
     private static final JLayeredPane calquePrincipal = fenetrePrincipale.getLayeredPane();
     private static JPanel panneauParent = null;
+    private static ManagerDesPages managerDesPages;
     // </editor-fold>
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Methodes PUBLIC">
@@ -45,6 +47,7 @@ public class VueApplication {
         fenetrePrincipale.setLocationRelativeTo(null);
         creerPanneauParent();
         creerArrierePlan();
+        managerDesPages = ManagerDesPages.getInstance();
     }
     /**
      * Affiche la fenetre principale.
@@ -116,6 +119,11 @@ public class VueApplication {
         calquePrincipal.add(arrirePlan);
         definirUneMiseEnPageSpring(calquePrincipal, arrirePlan, null);
         calquePrincipal.setLayer(arrirePlan, Integer.MIN_VALUE);
+    }
+
+    public static void ajouterAuPanneauParent(JPanel panel) {
+        panneauParent.add(panel);
+        definirUneMiseEnPageSpring(panneauParent, panel, null);
     }
     // </editor-fold>
     //****************************************************************************************************************//
