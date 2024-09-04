@@ -1,5 +1,5 @@
 package sparadrap.controllers;
-import sparadrap.views.MainView;
+import sparadrap.views.AppView;
 /**
  * [MainController] - class
  * @author Mathaus
@@ -18,7 +18,7 @@ public class MainController {
      * Affiche la vue.
      */
     public static final void start() {
-        MainView.show();
+        AppView.afficher();
     }
     // </editor-fold>
     //****************************************************************************************************************//
