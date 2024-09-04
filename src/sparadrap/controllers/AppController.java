@@ -1,23 +1,23 @@
 package sparadrap.controllers;
 import sparadrap.views.AppView;
 /**
- * [MainController] - class
+ * [AppController] - class
  * @author Mathaus
  */
-public class MainController {
+public class AppController {
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Constructeurs">
     /**
      * Constructeur vide en privee de la classe statique MainController.
      */
-    private MainController(){}
+    private AppController(){}
     // </editor-fold>
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Methodes PUBLIC">
     /**
      * Affiche la vue.
      */
-    public static final void start() {
+    public static final void demarrer() {
         AppView.afficher();
     }
     // </editor-fold>
