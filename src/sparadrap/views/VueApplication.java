@@ -1,22 +1,22 @@
 package sparadrap.views;
-import sparadrap.models.AppModel;
+import sparadrap.models.ModeleApplication;
 import javax.swing.*;
 import java.awt.*;
 /**
- * [AppView] - class
+ * [VueApplication] - class
  * @author Mathaus
  */
-public class AppView {
+public class VueApplication {
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Constructeurs">
     /**
      * Constructeur vide en privee de la classe statique MainView.
      */
-    private AppView(){}
+    private VueApplication(){}
     // </editor-fold>
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Proprietes">
-    private static final JFrame fenetrePrincipale = new JFrame(AppModel.APP_TITRE + " - " + AppModel.APP_VERSION);
+    private static final JFrame fenetrePrincipale = new JFrame(ModeleApplication.APP_TITRE + " - " + ModeleApplication.APP_VERSION);
     private static final JLayeredPane calquePrincipal = fenetrePrincipale.getLayeredPane();
     private static JPanel panneauParent = null;
     // </editor-fold>
@@ -38,7 +38,7 @@ public class AppView {
      * Configure la JFrame, puis creer les composants avec les donnees du MainModel.
      */
     private static void configurerPanneauParent() {
-        Dimension frameSize = new Dimension(AppModel.APP_MIN_WIDTH, AppModel.APP_MIN_HEIGHT);
+        Dimension frameSize = new Dimension(ModeleApplication.APP_MIN_WIDTH, ModeleApplication.APP_MIN_HEIGHT);
         fenetrePrincipale.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fenetrePrincipale.setSize(frameSize);
         fenetrePrincipale.setMinimumSize(frameSize);
