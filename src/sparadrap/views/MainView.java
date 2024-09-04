@@ -1,5 +1,5 @@
 package sparadrap.views;
-import sparadrap.models.MainModel;
+import sparadrap.models.AppModel;
 import javax.swing.*;
 import java.awt.*;
 /**
@@ -16,7 +16,7 @@ public class MainView {
     // </editor-fold>
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Proprietes">
-    private static final JFrame mainFrame = new JFrame(MainModel.APP_TITLE + " - " + MainModel.APP_VERSION);
+    private static final JFrame mainFrame = new JFrame(AppModel.APP_TITRE + " - " + AppModel.APP_VERSION);
     private static final JLayeredPane mainLayers = mainFrame.getLayeredPane();
     private static JPanel mainBody = null;
     // </editor-fold>
@@ -38,7 +38,7 @@ public class MainView {
      * Configure la JFrame, puis creer les composants avec les donnees du MainModel.
      */
     private static void configMainContentPane() {
-        Dimension frameSize = new Dimension(MainModel.APP_MIN_WIDTH, MainModel.APP_MIN_HEIGHT);
+        Dimension frameSize = new Dimension(AppModel.APP_MIN_WIDTH, AppModel.APP_MIN_HEIGHT);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(frameSize);
         mainFrame.setMinimumSize(frameSize);
