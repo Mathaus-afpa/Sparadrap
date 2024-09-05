@@ -36,7 +36,7 @@ public class Mutuelle extends Entite {
      */
     @Override
     public final void setNom(String nom) {
-
+        this.nom = nom;
     }
     // </editor-fold>
     //****************************************************************************************************************//
