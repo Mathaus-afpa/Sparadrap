@@ -90,4 +90,23 @@ public abstract class Entite {
     public abstract void setNom(String nom);
     // </editor-fold>
     //****************************************************************************************************************//
+    //****************************************************************************************************************//
+    // <editor-fold defaultstate="collapsed" desc="Methodes PUBLIC">
+    /**
+     * Permet de definir les informations d'une Entite.
+     * @param nom
+     * @param adresse
+     * @param telephone
+     * @param email
+     * @param codePostal
+     */
+    public void completerIdentite(String nom, String adresse, String telephone, String email, String codePostal) {
+        this.setNom(nom);
+        this.setAdresse(adresse);
+        this.setTelephone(telephone);
+        this.setEmail(email);
+        this.setCodePostal(codePostal);
+    }
+    // </editor-fold>
+    //****************************************************************************************************************//
 }

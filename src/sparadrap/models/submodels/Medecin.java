@@ -5,6 +5,17 @@ package sparadrap.models.submodels;
  */
 public class Medecin extends Personne {
     //****************************************************************************************************************//
+    // <editor-fold defaultstate="collapsed" desc="Constructeurs">
+    /**
+     * Constructeur vide en privee de la classe statique MainView.
+     */
+    public Medecin(){}
+    public Medecin(String prenom){
+        this.setPrenom(prenom);
+    }
+    // </editor-fold>
+    //****************************************************************************************************************//
+    //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Proprietes">
     private int agreement;
     // </editor-fold>

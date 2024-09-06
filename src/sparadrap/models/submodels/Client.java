@@ -6,6 +6,17 @@ import java.util.Date;
  */
 public class Client extends Personne {
     //****************************************************************************************************************//
+    // <editor-fold defaultstate="collapsed" desc="Constructeurs">
+    /**
+     * Constructeur vide en privee de la classe statique MainView.
+     */
+    public Client(){}
+    public Client(String prenom){
+        this.setPrenom(prenom);
+    }
+    // </editor-fold>
+    //****************************************************************************************************************//
+    //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Proprietes">
     private Date dateDeNaissance;
     private int numeroSecuriteSociale;
