@@ -47,6 +47,7 @@ public class VueClients extends JPanel {
     private void configurerVueClients() {
         this.setVisible(false);
         this.setBackground(Color.MAGENTA);
+        this.add(VueApplication.creerBoutonAccueil());
     }
     // </editor-fold>
     //****************************************************************************************************************//

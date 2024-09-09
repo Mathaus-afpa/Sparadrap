@@ -47,6 +47,7 @@ public class VueHistoriques extends JPanel {
     private void configurerVueHistoriques() {
         this.setVisible(false);
         this.setBackground(Color.RED);
+        this.add(VueApplication.creerBoutonAccueil());
     }
     // </editor-fold>
     //****************************************************************************************************************//

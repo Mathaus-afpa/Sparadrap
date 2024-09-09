@@ -1,8 +1,11 @@
 package sparadrap.views;
 import sparadrap.models.ModeleApplication;
+import sparadrap.models.enums.PAGES;
 import sparadrap.views.pages.ManagerDesPages;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 /**
  * [VueApplication] - class
  * @author Mathaus
@@ -33,39 +36,27 @@ public class VueApplication {
             afficherFenetrePrincipale();
         });
     }
-    // </editor-fold>
-    //****************************************************************************************************************//
-    // <editor-fold defaultstate="collapsed" desc="Methodes PRIVATE">
     /**
-     * Configure la JFrame, puis creer les composants avec les donnees du MainModel.
+     * Permet d'ajouter un panneau au panneau parent.
+     * @param panel
      */
-    private static void configurerPanneauParent() {
-        Dimension frameSize = new Dimension(ModeleApplication.APP_MIN_WIDTH, ModeleApplication.APP_MIN_HEIGHT);
-        fenetrePrincipale.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fenetrePrincipale.setSize(frameSize);
-        fenetrePrincipale.setMinimumSize(frameSize);
-        fenetrePrincipale.setLocationRelativeTo(null);
-        creerPanneauParent();
-        creerArrierePlan();
-        managerDesPages = ManagerDesPages.getInstance();
+    public static void ajouterAuPanneauParent(JPanel panel) {
+        panneauParent.add(panel);
+        definirUneMiseEnPageSpring(panneauParent, panel, null);
     }
     /**
-     * Affiche la fenetre principale.
+     * Creer un bouton pour revenir a la page d'accueil.
+     * @return (JButton)
      */
-    private static void afficherFenetrePrincipale() {
-        fenetrePrincipale.pack();
-        fenetrePrincipale.setVisible(true);
-    }
-    /**
-     * Creation du JPanel mainBody avec son titre et son classeur de contenu.
-     * Ajoute body au contentPane de la JFrame.
-     */
-    private static void creerPanneauParent() {
-        panneauParent = new JPanel();
-        panneauParent.setBackground(Color.WHITE);
-        fenetrePrincipale.setContentPane(panneauParent);
-        definirUneMiseEnPageSpring(calquePrincipal, panneauParent, new int[]{4});
-        calquePrincipal.setLayer(panneauParent, JLayeredPane.DEFAULT_LAYER);
+    public static JButton creerBoutonAccueil() {
+        JButton button = new JButton("RETOUR");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                managerDesPages.afficherPage(PAGES.ACCUEIL);
+            }
+        });
+        return button;
     }
     /**
      * Creation d'une marge via les contraintes du SpringLayout
@@ -73,7 +64,7 @@ public class VueApplication {
      * @param enfant enfant à parametrer la marge
      * @param marges taille des marges
      */
-    private static void definirUneMiseEnPageSpring(JComponent parent, JComponent enfant, int[] marges) {
+    public static void definirUneMiseEnPageSpring(JComponent parent, JComponent enfant, int[] marges) {
         int northMargin = 0;
         int eastMargin = 0;
         int southMargin = 0;
@@ -110,6 +101,40 @@ public class VueApplication {
         layout.putConstraint(SpringLayout.SOUTH, enfant, -southMargin, SpringLayout.SOUTH, parent);
         layout.putConstraint(SpringLayout.WEST, enfant, westMargin, SpringLayout.WEST, parent);
     }
+    // </editor-fold>
+    //****************************************************************************************************************//
+    // <editor-fold defaultstate="collapsed" desc="Methodes PRIVATE">
+    /**
+     * Configure la JFrame, puis creer les composants avec les donnees du MainModel.
+     */
+    private static void configurerPanneauParent() {
+        Dimension frameSize = new Dimension(ModeleApplication.APP_MIN_WIDTH, ModeleApplication.APP_MIN_HEIGHT);
+        fenetrePrincipale.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fenetrePrincipale.setSize(frameSize);
+        fenetrePrincipale.setMinimumSize(frameSize);
+        fenetrePrincipale.setLocationRelativeTo(null);
+        creerPanneauParent();
+        creerArrierePlan();
+        managerDesPages = ManagerDesPages.getInstance();
+    }
+    /**
+     * Affiche la fenetre principale.
+     */
+    private static void afficherFenetrePrincipale() {
+        fenetrePrincipale.pack();
+        fenetrePrincipale.setVisible(true);
+    }
+    /**
+     * Creation du JPanel mainBody avec son titre et son classeur de contenu.
+     * Ajoute body au contentPane de la JFrame.
+     */
+    private static void creerPanneauParent() {
+        panneauParent = new JPanel();
+        panneauParent.setBackground(Color.WHITE);
+        fenetrePrincipale.setContentPane(panneauParent);
+        definirUneMiseEnPageSpring(calquePrincipal, panneauParent, new int[]{4});
+        calquePrincipal.setLayer(panneauParent, JLayeredPane.DEFAULT_LAYER);
+    }
     /**
      * Creer les JPanel correspondant au Background Rose et Bleu.
      */
@@ -119,11 +144,6 @@ public class VueApplication {
         calquePrincipal.add(arrirePlan);
         definirUneMiseEnPageSpring(calquePrincipal, arrirePlan, null);
         calquePrincipal.setLayer(arrirePlan, Integer.MIN_VALUE);
-    }
-
-    public static void ajouterAuPanneauParent(JPanel panel) {
-        panneauParent.add(panel);
-        definirUneMiseEnPageSpring(panneauParent, panel, null);
     }
     // </editor-fold>
     //****************************************************************************************************************//

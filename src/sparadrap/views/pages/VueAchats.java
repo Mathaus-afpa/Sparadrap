@@ -47,6 +47,7 @@ public class VueAchats extends JPanel {
     private void configurerVueAchats() {
         this.setVisible(false);
         this.setBackground(Color.ORANGE);
+        this.add(VueApplication.creerBoutonAccueil());
     }
     // </editor-fold>
     //****************************************************************************************************************//
