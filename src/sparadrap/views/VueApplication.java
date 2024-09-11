@@ -1,5 +1,6 @@
 package sparadrap.views;
-import sparadrap.models.ModeleApplication;
+import sparadrap.composants.CustomBouton;
+import static sparadrap.models.ModeleApplication.*;
 import sparadrap.models.enums.PAGES;
 import sparadrap.views.pages.ManagerDesPages;
 import javax.swing.*;
@@ -20,10 +21,15 @@ public class VueApplication {
     // </editor-fold>
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Proprietes">
-    private static final JFrame fenetrePrincipale = new JFrame(ModeleApplication.APP_TITRE + " - " + ModeleApplication.APP_VERSION);
+    private static final JFrame fenetrePrincipale = new JFrame(APP_TITRE + " - " + APP_VERSION);
     private static final JLayeredPane calquePrincipal = fenetrePrincipale.getLayeredPane();
     private static JPanel panneauParent = null;
     private static ManagerDesPages managerDesPages;
+    private static final ImageIcon iconeBoutonAccueil = creerIconePourBoutonAccueil();
+    private static final ImageIcon iconeBoutonSupprimer = creerIconePourBoutonSupprimer();
+    private static final Color couleurPrincipale = APP_COULEUR_PRINCIPALE;
+    private static final Color couleurTexte = APP_COULEUR_TEXTE;
+    private static final int tailleBordureBouton = BTN_TAILLE_BORDURE;
     // </editor-fold>
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Methodes PUBLIC">
@@ -43,20 +49,6 @@ public class VueApplication {
     public static void ajouterAuPanneauParent(JPanel panel) {
         panneauParent.add(panel);
         definirUneMiseEnPageSpring(panneauParent, panel, null);
-    }
-    /**
-     * Creer un bouton pour revenir a la page d'accueil.
-     * @return (JButton)
-     */
-    public static JButton creerBoutonAccueil() {
-        JButton button = new JButton("RETOUR");
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                managerDesPages.afficherPage(PAGES.ACCUEIL);
-            }
-        });
-        return button;
     }
     /**
      * Creation d'une marge via les contraintes du SpringLayout
@@ -101,6 +93,75 @@ public class VueApplication {
         layout.putConstraint(SpringLayout.SOUTH, enfant, -southMargin, SpringLayout.SOUTH, parent);
         layout.putConstraint(SpringLayout.WEST, enfant, westMargin, SpringLayout.WEST, parent);
     }
+    /**
+     * Creer un bouton avec image pour revenir a la page d'accueil.
+     * @return (JButton)
+     */
+    public static JButton creerBoutonAccueil() {
+        // Créer le bouton avec l'image redimensionnée
+        JButton imageButton = new JButton(iconeBoutonAccueil);
+        Dimension imageDimension = new Dimension(BTN_ACCUEIL_WIDTH + 4, BTN_ACCUEIL_HEIGHT + 4);
+        imageButton.setBorder(BorderFactory.createLineBorder(couleurPrincipale, tailleBordureBouton));
+        imageButton.setMinimumSize(imageDimension);
+        imageButton.setPreferredSize(imageDimension);
+        imageButton.setMaximumSize(imageDimension);
+        imageButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                managerDesPages.afficherPage(PAGES.ACCUEIL);
+            }
+        });
+        return imageButton;
+    }
+    /**
+     * Creer un bouton avec image pour supprimer.
+     * @return (JButton)
+     */
+    public static JButton creerBoutonSupprimer() {
+        // Créer le bouton avec l'image redimensionnée
+        JButton imageButton = new JButton(iconeBoutonSupprimer);
+        imageButton.setBackground(new Color(255, 85, 85));
+        Dimension imageDimension = new Dimension(BTN_SUPPRIMER_WIDTH + 6, BTN_SUPPRIMER_HEIGHT + 10);
+        imageButton.setBorder(BorderFactory.createLineBorder(couleurTexte, tailleBordureBouton));
+        imageButton.setMinimumSize(imageDimension);
+        imageButton.setPreferredSize(imageDimension);
+        imageButton.setMaximumSize(imageDimension);
+        imageButton.setFocusPainted(false);
+        return imageButton;
+    }
+    /**
+     * Creer un bouton pour ajouter.
+     * @return (JButton)
+     */
+    public static JButton creerBoutonAjouter() {
+        Font font = new Font(APP_FONT, Font.PLAIN, BTN_AJOUT_FONTSIZE);
+        CustomBouton imageButton = new CustomBouton("+");
+        imageButton.setFont(font);
+        imageButton.setBackground(couleurPrincipale);
+        Dimension imageDimension = new Dimension(BTN_AJOUT_DIMENSIONS, BTN_AJOUT_DIMENSIONS);
+        imageButton.setBorder(BorderFactory.createLineBorder(couleurTexte, tailleBordureBouton));
+        imageButton.setMinimumSize(imageDimension);
+        imageButton.setPreferredSize(imageDimension);
+        imageButton.setMaximumSize(imageDimension);
+        return imageButton;
+    }
+    /**
+     * Creer un bouton pour modifier.
+     * @return (JButton)
+     */
+    public static JButton creerBoutonModifier() {
+        // Créer le bouton avec l'image redimensionnée
+        Font font = new Font(APP_FONT, Font.BOLD, 26);
+        CustomBouton imageButton = new CustomBouton("MODIFIER");
+        imageButton.setFont(font);
+        imageButton.setBackground(couleurPrincipale);
+        Dimension imageDimension = new Dimension(200, 52);
+        imageButton.setBorder(BorderFactory.createLineBorder(couleurTexte, tailleBordureBouton));
+        imageButton.setMinimumSize(imageDimension);
+        imageButton.setPreferredSize(imageDimension);
+        imageButton.setMaximumSize(imageDimension);
+        return imageButton;
+    }
     // </editor-fold>
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Methodes PRIVATE">
@@ -108,7 +169,7 @@ public class VueApplication {
      * Configure la JFrame, puis creer les composants avec les donnees du MainModel.
      */
     private static void configurerPanneauParent() {
-        Dimension frameSize = new Dimension(ModeleApplication.APP_MIN_WIDTH, ModeleApplication.APP_MIN_HEIGHT);
+        Dimension frameSize = new Dimension(APP_MIN_WIDTH, APP_MIN_HEIGHT);
         fenetrePrincipale.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fenetrePrincipale.setSize(frameSize);
         fenetrePrincipale.setMinimumSize(frameSize);
@@ -130,7 +191,7 @@ public class VueApplication {
      */
     private static void creerPanneauParent() {
         panneauParent = new JPanel();
-        panneauParent.setBackground(Color.WHITE);
+        panneauParent.setBackground(couleurPrincipale);
         fenetrePrincipale.setContentPane(panneauParent);
         definirUneMiseEnPageSpring(calquePrincipal, panneauParent, new int[]{4});
         calquePrincipal.setLayer(panneauParent, JLayeredPane.DEFAULT_LAYER);
@@ -140,10 +201,42 @@ public class VueApplication {
      */
     private static void creerArrierePlan() {
         JPanel arrirePlan = new JPanel();
-        arrirePlan.setBackground(Color.BLACK);
+        arrirePlan.setBackground(couleurTexte);
         calquePrincipal.add(arrirePlan);
         definirUneMiseEnPageSpring(calquePrincipal, arrirePlan, null);
         calquePrincipal.setLayer(arrirePlan, Integer.MIN_VALUE);
+    }
+    /**
+     * Recreer l'image du bouton accueil dans une taille coherente.
+     * @return (ImageIcon)
+     */
+    private static ImageIcon creerIconePourBoutonAccueil() {
+        ImageIcon iconeDepuisImage = new ImageIcon(VueApplication.class.getResource("/sparadrap/ressources/AccueilBouton.png"));
+        Image imageTailleReelle = iconeDepuisImage.getImage();
+        Image fixerDimensionsImage = imageTailleReelle.getScaledInstance(BTN_ACCUEIL_WIDTH, BTN_ACCUEIL_HEIGHT, Image.SCALE_SMOOTH);
+        ImageIcon iconeRedimensionnee = new ImageIcon(fixerDimensionsImage);
+        return iconeRedimensionnee;
+    }
+    /**
+     * Recreer l'image du bouton supprimer dans une taille coherente.
+     * @return (ImageIcon)
+     */
+    private static ImageIcon creerIconePourBoutonSupprimer() {
+        ImageIcon iconeDepuisImage = new ImageIcon(VueApplication.class.getResource("/sparadrap/ressources/DeleteBouton.png"));
+        Image imageTailleReelle = iconeDepuisImage.getImage();
+        Image fixerDimensionsImage = imageTailleReelle.getScaledInstance(BTN_SUPPRIMER_WIDTH, BTN_SUPPRIMER_HEIGHT, Image.SCALE_SMOOTH);
+        ImageIcon iconeRedimensionnee = new ImageIcon(fixerDimensionsImage);
+        return iconeRedimensionnee;
+    }
+    // </editor-fold>
+    //****************************************************************************************************************//
+    // <editor-fold defaultstate="collapsed" desc="Getters">
+    /**
+     * Getter
+     * @return (JFrame)
+     */
+    public static JFrame getFrame() {
+        return fenetrePrincipale;
     }
     // </editor-fold>
     //****************************************************************************************************************//

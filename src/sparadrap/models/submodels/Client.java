@@ -56,4 +56,11 @@ public class Client extends Personne {
     }
     // </editor-fold>
     //****************************************************************************************************************//
+    // <editor-fold defaultstate="collapsed" desc="Implements">
+    @Override
+    public String toString() {
+        return this.getNom() + " " + this.getPrenom();
+    }
+    // </editor-fold>
+    //****************************************************************************************************************//
 }
