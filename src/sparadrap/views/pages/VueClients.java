@@ -89,9 +89,9 @@ public class VueClients extends JPanel {
     private void creerBandeauBas() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        panel.add(ajouterColonneAccueil());
-        panel.add(ajouterColonneSupprimer());
-        panel.add(ajouterColonneModifierEtAjouter() );
+        panel.add(VueApplication.ajouterPanneauAccueil());
+        panel.add(ajouterPanneauSupprimer());
+        panel.add(ajouterPanneauModifierEtAjouter() );
         panel.setBackground(ModeleApplication.APP_COULEUR_PRINCIPALE);
         panel.setMinimumSize(dimensionBandeauBas);
         panel.setPreferredSize(dimensionBandeauBas);
@@ -99,26 +99,10 @@ public class VueClients extends JPanel {
         this.add(panel, BorderLayout.SOUTH);
     }
     /**
-     * Ajoute le panneau du bouton d'accueil.
-     * @return (JPanel)
-     */
-    private JPanel ajouterColonneAccueil() {
-        JPanel colonneBoutonAccueil = new JPanel();
-        JButton boutonAccueil = VueApplication.creerBoutonAccueil();
-        Dimension homedim = new Dimension(174, ModeleApplication.BANDEAU_BAS_TAILLE);
-        colonneBoutonAccueil.setBackground(ModeleApplication.APP_COULEUR_PRINCIPALE);
-        colonneBoutonAccueil.setMinimumSize(homedim);
-        colonneBoutonAccueil.setPreferredSize(homedim);
-        colonneBoutonAccueil.setMaximumSize(homedim);
-        colonneBoutonAccueil.add(boutonAccueil);
-        VueApplication.definirUneMiseEnPageSpring(colonneBoutonAccueil, boutonAccueil, new int[] {3});
-        return colonneBoutonAccueil;
-    }
-    /**
      * Ajoute le panneau du bouton supprimer.
      * @return (JPanel)
      */
-    private JPanel ajouterColonneSupprimer() {
+    private JPanel ajouterPanneauSupprimer() {
         JPanel colonneBoutonSupprimer = new JPanel();
         colonneBoutonSupprimer.add(VueApplication.creerBoutonSupprimer());
         colonneBoutonSupprimer.setBackground(ModeleApplication.APP_COULEUR_PRINCIPALE);
@@ -128,14 +112,19 @@ public class VueClients extends JPanel {
      * Ajoute le panneau des boutons modifier et ajouter.
      * @return (JPanel)
      */
-    private JPanel ajouterColonneModifierEtAjouter() {
+    private JPanel ajouterPanneauModifierEtAjouter() {
         JPanel colonne = new JPanel();
+        JButton bouton = VueApplication.creerBoutonTexte("modifer");
         Dimension dimensionColonne = new Dimension(280, ModeleApplication.BANDEAU_BAS_TAILLE);
         colonne.setBackground(ModeleApplication.APP_COULEUR_PRINCIPALE);
         colonne.setMinimumSize(dimensionColonne);
         colonne.setPreferredSize(dimensionColonne);
         colonne.setMaximumSize(dimensionColonne);
-        colonne.add(VueApplication.creerBoutonModifier());
+        Dimension imageDimension = new Dimension(200, 52);
+        bouton.setMinimumSize(imageDimension);
+        bouton.setPreferredSize(imageDimension);
+        bouton.setMaximumSize(imageDimension);
+        colonne.add(bouton);
         colonne.add( VueApplication.creerBoutonAjouter());
         return colonne;
     }

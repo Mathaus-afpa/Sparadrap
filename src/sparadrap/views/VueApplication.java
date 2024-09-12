@@ -1,6 +1,7 @@
 package sparadrap.views;
 import sparadrap.composants.CustomBouton;
 import static sparadrap.models.ModeleApplication.*;
+import sparadrap.models.ModeleApplication;
 import sparadrap.models.enums.PAGES;
 import sparadrap.views.pages.ManagerDesPages;
 import javax.swing.*;
@@ -94,10 +95,26 @@ public class VueApplication {
         layout.putConstraint(SpringLayout.WEST, enfant, westMargin, SpringLayout.WEST, parent);
     }
     /**
+     * Creer le panneau du bouton d'accueil.
+     * @return (JPanel)
+     */
+    public static JPanel ajouterPanneauAccueil() {
+        JPanel colonneBoutonAccueil = new JPanel();
+        JButton boutonAccueil = VueApplication.creerBoutonAccueil();
+        Dimension dimensionPanel = new Dimension(174, ModeleApplication.BANDEAU_BAS_TAILLE);
+        colonneBoutonAccueil.setBackground(ModeleApplication.APP_COULEUR_PRINCIPALE);
+        colonneBoutonAccueil.setMinimumSize(dimensionPanel);
+        colonneBoutonAccueil.setPreferredSize(dimensionPanel);
+        colonneBoutonAccueil.setMaximumSize(dimensionPanel);
+        colonneBoutonAccueil.add(boutonAccueil);
+        VueApplication.definirUneMiseEnPageSpring(colonneBoutonAccueil, boutonAccueil, new int[] {3});
+        return colonneBoutonAccueil;
+    }
+    /**
      * Creer un bouton avec image pour revenir a la page d'accueil.
      * @return (JButton)
      */
-    public static JButton creerBoutonAccueil() {
+    private static JButton creerBoutonAccueil() {
         // Créer le bouton avec l'image redimensionnée
         JButton imageButton = new JButton(iconeBoutonAccueil);
         Dimension imageDimension = new Dimension(BTN_ACCUEIL_WIDTH + 4, BTN_ACCUEIL_HEIGHT + 4);
@@ -135,7 +152,8 @@ public class VueApplication {
      */
     public static JButton creerBoutonAjouter() {
         Font font = new Font(APP_FONT, Font.PLAIN, BTN_AJOUT_FONTSIZE);
-        CustomBouton imageButton = new CustomBouton("+");
+        CustomBouton imageButton = new CustomBouton();
+        imageButton.setText("+");
         imageButton.setFont(font);
         imageButton.setBackground(couleurPrincipale);
         Dimension imageDimension = new Dimension(BTN_AJOUT_DIMENSIONS, BTN_AJOUT_DIMENSIONS);
@@ -149,17 +167,14 @@ public class VueApplication {
      * Creer un bouton pour modifier.
      * @return (JButton)
      */
-    public static JButton creerBoutonModifier() {
+    public static JButton creerBoutonTexte(String texte) {
         // Créer le bouton avec l'image redimensionnée
         Font font = new Font(APP_FONT, Font.BOLD, 26);
-        CustomBouton imageButton = new CustomBouton("MODIFIER");
+        CustomBouton imageButton = new CustomBouton();
+        imageButton.setText(texte);
         imageButton.setFont(font);
         imageButton.setBackground(couleurPrincipale);
-        Dimension imageDimension = new Dimension(200, 52);
         imageButton.setBorder(BorderFactory.createLineBorder(couleurTexte, tailleBordureBouton));
-        imageButton.setMinimumSize(imageDimension);
-        imageButton.setPreferredSize(imageDimension);
-        imageButton.setMaximumSize(imageDimension);
         return imageButton;
     }
     // </editor-fold>

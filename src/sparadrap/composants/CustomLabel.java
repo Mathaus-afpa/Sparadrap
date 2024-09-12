@@ -16,6 +16,7 @@ public class CustomLabel extends JLabel {
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Proprietes">
     private String texte = "";
+    private int horizontalAlignment = 0;
     // </editor-fold>
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Implements">
@@ -35,10 +36,30 @@ public class CustomLabel extends JLabel {
         if (this.texte != null && !this.texte.isEmpty()) {
             int textWidth = fm.stringWidth(this.texte);
             int textHeight = fm.getAscent();
-            int x = (getWidth() - textWidth) / 2 - 20;
+            int x;
+            if (horizontalAlignment == 0) {
+                x = (getWidth() - textWidth) / 2 - 20;
+            } else {
+                if (horizontalAlignment > 0) {
+                    x = horizontalAlignment;
+                } else {
+                    x = getWidth() - textWidth + horizontalAlignment;
+                }
+            }
             int y = (getHeight() + textHeight) / 2 ;
             g2d.drawString(this.texte, x, y);
         }
+    }
+    // </editor-fold>
+    //****************************************************************************************************************//
+    // <editor-fold defaultstate="collapsed" desc="Methodes PUBLIC">
+    /**
+     * Defini une marge.
+     * Si negative depuis la droite, sinon a gauche.
+     * @param horizontalAlignment
+     */
+    public void setHorizontalAlignment(int horizontalAlignment) {
+        this.horizontalAlignment = horizontalAlignment;
     }
     // </editor-fold>
     //****************************************************************************************************************//

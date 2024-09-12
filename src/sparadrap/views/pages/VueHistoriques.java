@@ -1,4 +1,6 @@
 package sparadrap.views.pages;
+import sparadrap.composants.CustomLabel;
+import sparadrap.models.ModeleApplication;
 import sparadrap.views.VueApplication;
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +21,7 @@ public class VueHistoriques extends JPanel {
     // </editor-fold>
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Proprietes">
+    Dimension dimensionBandeauBas = new Dimension(0, ModeleApplication.BANDEAU_BAS_TAILLE);
     // </editor-fold>
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Classes interne">
@@ -45,9 +48,65 @@ public class VueHistoriques extends JPanel {
      * Configure le JPanel.
      */
     private void configurerVueHistoriques() {
+        this.setLayout(new BorderLayout());
         this.setVisible(false);
-        this.setBackground(Color.RED);
-        this.add(VueApplication.creerBoutonAccueil());
+        afficherHistoriquesView();
+        creerBandeauBas();
+    }
+    /**
+     * Ajoute la vue.
+     */
+    private void afficherHistoriquesView() {
+        JPanel panel = new JPanel();
+        panel.setBackground(Color.PINK);
+        this.add(panel, BorderLayout.CENTER);
+    }
+    /**
+     * Creer le bandeau du bas avec le bouton accueil et le total.
+     */
+    private void creerBandeauBas() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add(VueApplication.ajouterPanneauAccueil());
+        panel.add(ajouterPanneauTotal());
+        panel.add(ajouterPanneauVide() );
+        panel.setBackground(ModeleApplication.APP_COULEUR_PRINCIPALE);
+        panel.setMinimumSize(dimensionBandeauBas);
+        panel.setPreferredSize(dimensionBandeauBas);
+        panel.setMaximumSize(dimensionBandeauBas);
+        this.add(panel, BorderLayout.SOUTH);
+    }
+    /**
+     * Ajoute le panneau du total.
+     * @return (JPanel)
+     */
+    private JPanel ajouterPanneauTotal() {
+        JPanel panneauTotal = new JPanel();
+        CustomLabel label = new CustomLabel();
+        Font font = new Font(ModeleApplication.APP_FONT, Font.PLAIN, 30);
+        VueApplication.definirUneMiseEnPageSpring(panneauTotal, label, new int[] {4});
+        panneauTotal.setBackground(ModeleApplication.APP_COULEUR_PRINCIPALE);
+        label.setBackground(ModeleApplication.APP_COULEUR_TEXTE);
+        label.setOpaque(true);
+        label.setForeground(ModeleApplication.APP_COULEUR_PRINCIPALE);
+        label.setText("TOTAL: 0€");
+        label.setHorizontalAlignment(-20);
+        label.setFont(font);
+        panneauTotal.add(label);
+        return panneauTotal;
+    }
+    /**
+     * Ajoute un panneau vide de taille fixe.
+     * @return (JPanel)
+     */
+    private JPanel ajouterPanneauVide() {
+        JPanel panneau = new JPanel();
+        Dimension dimensionColonne = new Dimension(90, ModeleApplication.BANDEAU_BAS_TAILLE);
+        panneau.setBackground(ModeleApplication.APP_COULEUR_PRINCIPALE);
+        panneau.setMinimumSize(dimensionColonne);
+        panneau.setPreferredSize(dimensionColonne);
+        panneau.setMaximumSize(dimensionColonne);
+        return panneau;
     }
     // </editor-fold>
     //****************************************************************************************************************//
