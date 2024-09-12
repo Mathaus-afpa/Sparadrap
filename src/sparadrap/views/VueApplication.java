@@ -28,6 +28,7 @@ public class VueApplication {
     private static ManagerDesPages managerDesPages;
     private static final ImageIcon iconeBoutonAccueil = creerIconePourBoutonAccueil();
     private static final ImageIcon iconeBoutonSupprimer = creerIconePourBoutonSupprimer();
+    private static final ImageIcon iconeBoutonAfficher = creerIconePourBoutonAfficher();
     private static final Color couleurPrincipale = APP_COULEUR_PRINCIPALE;
     private static final Color couleurTexte = APP_COULEUR_TEXTE;
     private static final int tailleBordureBouton = BTN_TAILLE_BORDURE;
@@ -177,6 +178,22 @@ public class VueApplication {
         imageButton.setBorder(BorderFactory.createLineBorder(couleurTexte, tailleBordureBouton));
         return imageButton;
     }
+    /**
+     * Creer un bouton avec image pour afficher.
+     * @return (JButton)
+     */
+    public static JButton creerBoutonAfficher() {
+        // Créer le bouton avec l'image redimensionnée
+        JButton imageButton = new JButton(iconeBoutonAfficher);
+        imageButton.setBackground(couleurPrincipale);
+        Dimension imageDimension = new Dimension(BTN_AFFICHER_WIDTH * 2, BTN_AFFICHER_HEIGHT + 4);
+        imageButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        imageButton.setMinimumSize(imageDimension);
+        imageButton.setPreferredSize(imageDimension);
+        imageButton.setMaximumSize(imageDimension);
+        imageButton.setFocusPainted(false);
+        return imageButton;
+    }
     // </editor-fold>
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Methodes PRIVATE">
@@ -240,6 +257,17 @@ public class VueApplication {
         ImageIcon iconeDepuisImage = new ImageIcon(VueApplication.class.getResource("/sparadrap/ressources/DeleteBouton.png"));
         Image imageTailleReelle = iconeDepuisImage.getImage();
         Image fixerDimensionsImage = imageTailleReelle.getScaledInstance(BTN_SUPPRIMER_WIDTH, BTN_SUPPRIMER_HEIGHT, Image.SCALE_SMOOTH);
+        ImageIcon iconeRedimensionnee = new ImageIcon(fixerDimensionsImage);
+        return iconeRedimensionnee;
+    }
+    /**
+     * Recreer l'image du bouton afficher dans une taille coherente.
+     * @return (ImageIcon)
+     */
+    private static ImageIcon creerIconePourBoutonAfficher() {
+        ImageIcon iconeDepuisImage = new ImageIcon(VueApplication.class.getResource("/sparadrap/ressources/AfficherBouton.png"));
+        Image imageTailleReelle = iconeDepuisImage.getImage();
+        Image fixerDimensionsImage = imageTailleReelle.getScaledInstance(BTN_AFFICHER_WIDTH, BTN_AFFICHER_HEIGHT, Image.SCALE_SMOOTH);
         ImageIcon iconeRedimensionnee = new ImageIcon(fixerDimensionsImage);
         return iconeRedimensionnee;
     }

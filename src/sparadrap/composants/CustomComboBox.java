@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 /**
  * [CustomComboBox] - class
  * @author Mathaus
@@ -21,9 +23,6 @@ public class CustomComboBox<E> extends JPanel {
         creerMenuCollection();
         this.setLayout(new BorderLayout());
         this.add(bouton, BorderLayout.CENTER);
-        if (this.items != null && items.length > 0) {
-            setSelectedItem(this.items[0]);
-        } //todo: null ?
     }
     // </editor-fold>
     //****************************************************************************************************************//
@@ -34,6 +33,7 @@ public class CustomComboBox<E> extends JPanel {
     private CustomLabel label = new CustomLabel();
     private E[] items;
     private E selectedItem;
+    private PropertyChangeSupport support;
     {
         personnaliserBouton();
         personnaliserLabel();
@@ -48,6 +48,7 @@ public class CustomComboBox<E> extends JPanel {
         });
         JScrollPane popup = (JScrollPane) popupMenu.getUI().getAccessibleChild(popupMenu, 0);
         popup.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        this.support = new PropertyChangeSupport(this);
     }
     // </editor-fold>
     //****************************************************************************************************************//
@@ -59,6 +60,21 @@ public class CustomComboBox<E> extends JPanel {
     public void updateItems(E[] newItems) {
         this.items = newItems;
         creerMenuCollection();
+    }
+    /**
+     * Permet d'ajouter un observateur.
+     * @param pcl  the PropertyChangeListener to be added
+     */
+    public void addPropertyChangeListener(PropertyChangeListener pcl) {
+        support.addPropertyChangeListener(pcl);
+    }
+    /**
+     * Permet de supprimer un observateur
+     * @param pcl the PropertyChangeListener to be removed
+     *
+     */
+    public void removePropertyChangeListener(PropertyChangeListener pcl) {
+        support.removePropertyChangeListener(pcl);
     }
     // </editor-fold>
     //****************************************************************************************************************//
@@ -78,7 +94,6 @@ public class CustomComboBox<E> extends JPanel {
             public void componentResized(ComponentEvent componentEvent) {
                 if (bouton.isShowing() && popupMenu != null) {
                     popupMenu.setVisible(false);
-                    afficherMenu();
                 }
             }
         });
@@ -127,7 +142,10 @@ public class CustomComboBox<E> extends JPanel {
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Setters">
     private void setSelectedItem(E item) {
+        E oldSelectedItem = this.selectedItem;
         this.selectedItem = item;
+        // Notifie les observateurs que selectedItem a changé
+        support.firePropertyChange("selectedItem", oldSelectedItem, item);
         label.setText(item.toString());
     }
     // </editor-fold>

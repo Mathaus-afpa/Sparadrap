@@ -27,6 +27,8 @@ public class ModeleApplication {
     public final static int BTN_ACCUEIL_HEIGHT = 52;
     public final static int BTN_SUPPRIMER_WIDTH = 38;
     public final static int BTN_SUPPRIMER_HEIGHT = 42;
+    public final static int BTN_AFFICHER_WIDTH = 35;
+    public final static int BTN_AFFICHER_HEIGHT = 25;
     public final static int BTN_AJOUT_FONTSIZE = 48;
     public final static int BTN_AJOUT_DIMENSIONS = 52;
     public final static int BTN_TAILLE_BORDURE = 3;

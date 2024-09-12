@@ -2,7 +2,9 @@ package sparadrap.views.pages;
 import sparadrap.composants.CustomComboBox;
 import sparadrap.mocks.DataSource;
 import sparadrap.models.ModeleApplication;
+import sparadrap.models.submodels.Client;
 import sparadrap.views.VueApplication;
+import sparadrap.views.subviews.ClientView;
 import javax.swing.*;
 import java.awt.*;
 /**
@@ -24,6 +26,10 @@ public class VueClients extends JPanel {
     // <editor-fold defaultstate="collapsed" desc="Proprietes">
     Dimension dimensionBandeauHaut = new Dimension(0, ModeleApplication.BANDEAU_HAUT_TAILLE);
     Dimension dimensionBandeauBas = new Dimension(0, ModeleApplication.BANDEAU_BAS_TAILLE);
+    ClientView clientView = new ClientView();
+    CustomComboBox selectionClient = new CustomComboBox(DataSource.CLIENTS.toArray());
+    JButton boutonSupprimerClient;
+    JButton boutonModifierClient;
     // </editor-fold>
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Classes interne">
@@ -55,6 +61,12 @@ public class VueClients extends JPanel {
         creerBandeauHaut();
         afficherClientView();
         creerBandeauBas();
+        selectionClient.addPropertyChangeListener(evt -> {
+            if ("selectedItem".equals(evt.getPropertyName())) {
+                Client client = (Client) selectionClient.getSelectedItem();
+                clientView.setClient(client);
+            }
+        });
     }
     /**
      * Creer le bandeau du haut avec sa combobox.
@@ -66,21 +78,18 @@ public class VueClients extends JPanel {
         panel.setPreferredSize(dimensionBandeauHaut);
         panel.setMaximumSize(dimensionBandeauHaut);
         this.add(panel, BorderLayout.NORTH);
-        CustomComboBox menu = new CustomComboBox(DataSource.CLIENTS.toArray());
-        VueApplication.definirUneMiseEnPageSpring(panel, menu, new int[] { 4, 500, 0, 40});
-        panel.add(menu);
+        VueApplication.definirUneMiseEnPageSpring(panel, selectionClient, new int[] { 4, 500, 0, 40});
+        panel.add(selectionClient);
+        //clientView.setClient((Client) menu.getSelectedItem());
     }
     /**
      * Ajoute la vue.
      */
     private void afficherClientView() {
         JPanel panel = new JPanel();
-        JPanel clientView = new JPanel();
-        VueApplication.definirUneMiseEnPageSpring(panel, clientView, new int[]{5 , 120, 5 ,40});
         panel.setBackground(ModeleApplication.APP_COULEUR_PRINCIPALE);
-        clientView.setBackground(ModeleApplication.APP_COULEUR_PRINCIPALE);
-        clientView.setBorder(BorderFactory.createLineBorder(ModeleApplication.APP_COULEUR_TEXTE, ModeleApplication.BTN_TAILLE_BORDURE_FINE));
         panel.add(clientView);
+        VueApplication.definirUneMiseEnPageSpring(panel, clientView, new int[]{5 , 120, 5 ,40});
         this.add(panel, BorderLayout.CENTER);
     }
     /**
@@ -91,7 +100,7 @@ public class VueClients extends JPanel {
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(VueApplication.ajouterPanneauAccueil());
         panel.add(ajouterPanneauSupprimer());
-        panel.add(ajouterPanneauModifierEtAjouter() );
+        panel.add(ajouterPanneauModifierEtAjouter());
         panel.setBackground(ModeleApplication.APP_COULEUR_PRINCIPALE);
         panel.setMinimumSize(dimensionBandeauBas);
         panel.setPreferredSize(dimensionBandeauBas);
@@ -104,7 +113,8 @@ public class VueClients extends JPanel {
      */
     private JPanel ajouterPanneauSupprimer() {
         JPanel colonneBoutonSupprimer = new JPanel();
-        colonneBoutonSupprimer.add(VueApplication.creerBoutonSupprimer());
+        boutonSupprimerClient = VueApplication.creerBoutonSupprimer();
+        colonneBoutonSupprimer.add(boutonSupprimerClient);
         colonneBoutonSupprimer.setBackground(ModeleApplication.APP_COULEUR_PRINCIPALE);
         return colonneBoutonSupprimer;
     }
@@ -114,17 +124,17 @@ public class VueClients extends JPanel {
      */
     private JPanel ajouterPanneauModifierEtAjouter() {
         JPanel colonne = new JPanel();
-        JButton bouton = VueApplication.creerBoutonTexte("modifer");
+        boutonModifierClient = VueApplication.creerBoutonTexte("modifer");
         Dimension dimensionColonne = new Dimension(280, ModeleApplication.BANDEAU_BAS_TAILLE);
         colonne.setBackground(ModeleApplication.APP_COULEUR_PRINCIPALE);
         colonne.setMinimumSize(dimensionColonne);
         colonne.setPreferredSize(dimensionColonne);
         colonne.setMaximumSize(dimensionColonne);
         Dimension imageDimension = new Dimension(200, 52);
-        bouton.setMinimumSize(imageDimension);
-        bouton.setPreferredSize(imageDimension);
-        bouton.setMaximumSize(imageDimension);
-        colonne.add(bouton);
+        boutonModifierClient.setMinimumSize(imageDimension);
+        boutonModifierClient.setPreferredSize(imageDimension);
+        boutonModifierClient.setMaximumSize(imageDimension);
+        colonne.add(boutonModifierClient);
         colonne.add( VueApplication.creerBoutonAjouter());
         return colonne;
     }
