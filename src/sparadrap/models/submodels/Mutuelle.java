@@ -38,6 +38,11 @@ public class Mutuelle extends Entite {
     public final void setNom(String nom) {
         this.nom = nom;
     }
+
+    @Override
+    public String toString() {
+        return this.getNom() + " - " + this.getCodePostal();
+    }
     // </editor-fold>
     //****************************************************************************************************************//
 }

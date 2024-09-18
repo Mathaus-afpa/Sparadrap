@@ -1,6 +1,8 @@
 package sparadrap.views.pages;
 import sparadrap.models.ModeleApplication;
 import sparadrap.views.VueApplication;
+import sparadrap.views.subviews.AchatView;
+
 import javax.swing.*;
 import java.awt.*;
 /**
@@ -56,8 +58,7 @@ public class VueAchats extends JPanel {
      * Ajoute la vue.
      */
     private void afficherAchatView() {
-        JPanel panel = new JPanel();
-        panel.setBackground(Color.BLUE);
+        JPanel panel = new AchatView();
         this.add(panel, BorderLayout.CENTER);
     }
     /**

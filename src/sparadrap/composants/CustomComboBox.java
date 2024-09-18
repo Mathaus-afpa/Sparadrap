@@ -1,5 +1,7 @@
 package sparadrap.composants;
+import sparadrap.mocks.DataSource;
 import sparadrap.models.ModeleApplication;
+import sparadrap.models.submodels.Client;
 import sparadrap.views.VueApplication;
 import javax.swing.*;
 import javax.swing.plaf.basic.ComboPopup;
@@ -10,6 +12,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.List;
 /**
  * [CustomComboBox] - class
  * @author Mathaus
@@ -17,7 +20,7 @@ import java.beans.PropertyChangeSupport;
 public class CustomComboBox<E> extends JPanel {
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Constructeurs">
-    public CustomComboBox(E[] items) {
+    public CustomComboBox(List<E> items) {
         this.items = items;
         this.selectedItem = null;
         creerMenuCollection();
@@ -31,7 +34,7 @@ public class CustomComboBox<E> extends JPanel {
     private JComboBox comboBox = new JComboBox();
     private JComponent popupMenu = (JComponent) comboBox.getUI().getAccessibleChild(comboBox, 0);
     private CustomLabel label = new CustomLabel();
-    private E[] items;
+    private List<E> items;
     private E selectedItem;
     private PropertyChangeSupport support;
     {
@@ -57,9 +60,17 @@ public class CustomComboBox<E> extends JPanel {
      * Change la collection d'items.
      * @param newItems
      */
-    public void updateItems(E[] newItems) {
-        this.items = newItems;
-        creerMenuCollection();
+    public void updateItems(E item) {
+        this.items.remove(item);
+        if (items.size() != 0) {
+            comboBox.setSelectedItem(this.items.getFirst());
+            creerMenuCollection();
+        } else {
+            comboBox.setSelectedItem(null);
+            this.selectedItem = null;
+            label.setText("- ajouter un élément -");
+        }
+
     }
     /**
      * Permet d'ajouter un observateur.
@@ -127,7 +138,7 @@ public class CustomComboBox<E> extends JPanel {
      * Ajoute a la combobox les donnees.
      */
     private void creerMenuCollection() {
-        comboBox.removeAll();
+        comboBox.removeAllItems();
         for (E item : items) {
             comboBox.addItem(item);
         }
@@ -142,11 +153,13 @@ public class CustomComboBox<E> extends JPanel {
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Setters">
     private void setSelectedItem(E item) {
-        E oldSelectedItem = this.selectedItem;
-        this.selectedItem = item;
-        // Notifie les observateurs que selectedItem a changé
-        support.firePropertyChange("selectedItem", oldSelectedItem, item);
-        label.setText(item.toString());
+        if (item != null) {
+            E oldSelectedItem = this.selectedItem;
+            this.selectedItem = item;
+            // Notifie les observateurs que selectedItem a changé
+            support.firePropertyChange("selectedItem", oldSelectedItem, item);
+            label.setText(item.toString());
+        }
     }
     // </editor-fold>
     //****************************************************************************************************************//

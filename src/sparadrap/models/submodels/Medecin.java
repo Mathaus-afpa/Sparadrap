@@ -1,4 +1,8 @@
 package sparadrap.models.submodels;
+import sparadrap.models.enums.medecine.SPECIALITES;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * [Medecin] - class
  * @author Mathaus
@@ -40,4 +44,23 @@ public class Medecin extends Personne {
     }
     // </editor-fold>
     //****************************************************************************************************************//
+    List<SPECIALITES> specilites = new ArrayList<>();
+    private boolean isGeneraliste = false;
+    @Override
+    public String toString() {
+        return "Dr " + this.getPrenom() + " " + this.getNom();
+    }
+    public void addSpecialite(SPECIALITES specialite){
+        if (!this.specilites.contains(specialite)){
+            this.specilites.add(specialite);
+            if (specialite == SPECIALITES.GENERALE) isGeneraliste = true;
+        }
+    }
+    public List<SPECIALITES> getSpecialites() {
+        return specilites;
+    }
+
+    public void removeSpecialite(SPECIALITES spe) {
+        this.specilites.remove(spe);
+    }
 }

@@ -1,7 +1,5 @@
 package sparadrap.models;
-
 import java.awt.*;
-
 /**
  * [ModeleApplication] - class
  * @author Mathaus

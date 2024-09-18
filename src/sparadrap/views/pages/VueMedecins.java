@@ -1,28 +1,25 @@
 package sparadrap.views.pages;
+
 import sparadrap.composants.CustomComboBox;
-import sparadrap.composants.CustomOptionPane;
 import sparadrap.mocks.DataSource;
 import sparadrap.models.ModeleApplication;
-import sparadrap.models.submodels.Client;
+import sparadrap.models.submodels.Medecin;
 import sparadrap.views.VueApplication;
-import sparadrap.views.subviews.ClientView;
+import sparadrap.views.subviews.MedecinView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * [VueClients] - class
- * @author Mathaus
- */
-public class VueClients extends JPanel {
+public class VueMedecins extends JPanel {
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Constructeurs">
-    private VueClients() {
-        if (VueClients.SingletonVueClients.INSTANCE != null) {
+    private VueMedecins() {
+        if (SingletonVueMedecins.INSTANCE != null) {
             throw new IllegalStateException("Instance already created");
         }
-        configurerVueClients();
+        configurerVueMedecins();
         VueApplication.ajouterAuPanneauParent(this);
     }
     // </editor-fold>
@@ -30,19 +27,19 @@ public class VueClients extends JPanel {
     // <editor-fold defaultstate="collapsed" desc="Proprietes">
     Dimension dimensionBandeauHaut = new Dimension(0, ModeleApplication.BANDEAU_HAUT_TAILLE);
     Dimension dimensionBandeauBas = new Dimension(0, ModeleApplication.BANDEAU_BAS_TAILLE);
-    ClientView clientView = new ClientView();
-    CustomComboBox selectionClient = new CustomComboBox(DataSource.CLIENTS);
+    MedecinView medecinView = new MedecinView();
+    CustomComboBox selectionMedecin = new CustomComboBox(DataSource.MEDECINS);
     JButton boutonSupprimerClient;
-    JButton boutonAjouterClient;
     JButton boutonModifierClient;
+    boolean edition = false;
     // </editor-fold>
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Classes interne">
     /**
      * Classe porteuse du Singleton.
      */
-    private static class SingletonVueClients {
-        private static final VueClients INSTANCE = new VueClients();
+    private static class SingletonVueMedecins {
+        private static final VueMedecins INSTANCE = new VueMedecins();
     }
     // </editor-fold>
     //****************************************************************************************************************//
@@ -51,8 +48,8 @@ public class VueClients extends JPanel {
      * Recupere l'instance unique du Singleton.
      * @return (JPanel)
      */
-    public static VueClients getInstance() {
-        return VueClients.SingletonVueClients.INSTANCE;
+    public static VueMedecins getInstance() {
+        return VueMedecins.SingletonVueMedecins.INSTANCE;
     }
     // </editor-fold>
     //****************************************************************************************************************//
@@ -60,16 +57,16 @@ public class VueClients extends JPanel {
     /**
      * Configure le JPanel.
      */
-    private void configurerVueClients() {
+    private void configurerVueMedecins() {
         this.setLayout(new BorderLayout());
         this.setVisible(false);
         creerBandeauHaut();
         afficherClientView();
         creerBandeauBas();
-        selectionClient.addPropertyChangeListener(evt -> {
+        selectionMedecin.addPropertyChangeListener(evt -> {
             if ("selectedItem".equals(evt.getPropertyName())) {
-                Client client = (Client) selectionClient.getSelectedItem();
-                clientView.setClient(client);
+                Medecin client = (Medecin) selectionMedecin.getSelectedItem();
+                medecinView.setMedecin(client);
             }
         });
     }
@@ -83,9 +80,9 @@ public class VueClients extends JPanel {
         panel.setPreferredSize(dimensionBandeauHaut);
         panel.setMaximumSize(dimensionBandeauHaut);
         this.add(panel, BorderLayout.NORTH);
-        VueApplication.definirUneMiseEnPageSpring(panel, selectionClient, new int[] { 4, 500, 0, 40});
-        panel.add(selectionClient);
-        clientView.setClient((Client) selectionClient.getSelectedItem());
+        VueApplication.definirUneMiseEnPageSpring(panel, selectionMedecin, new int[] { 4, 500, 0, 40});
+        panel.add(selectionMedecin);
+        medecinView.setMedecin((Medecin) selectionMedecin.getSelectedItem());
     }
     /**
      * Ajoute la vue.
@@ -93,8 +90,8 @@ public class VueClients extends JPanel {
     private void afficherClientView() {
         JPanel panel = new JPanel();
         panel.setBackground(ModeleApplication.APP_COULEUR_PRINCIPALE);
-        panel.add(clientView);
-        VueApplication.definirUneMiseEnPageSpring(panel, clientView, new int[]{5 , 120, 5 ,40});
+        panel.add(medecinView);
+        VueApplication.definirUneMiseEnPageSpring(panel, medecinView, new int[]{5 , 120, 5 ,40});
         this.add(panel, BorderLayout.CENTER);
     }
     /**
@@ -122,10 +119,10 @@ public class VueClients extends JPanel {
         boutonSupprimerClient.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Client client = clientView.getClient();
+                Medecin client = medecinView.getMedecin();
                 if (client != null) {
                     DataSource.CLIENTS.remove(client);
-                    selectionClient.updateItems(client);
+                    selectionMedecin.updateItems(client);
                 }
             }
         });
@@ -150,41 +147,25 @@ public class VueClients extends JPanel {
         boutonModifierClient.setPreferredSize(imageDimension);
         boutonModifierClient.setMaximumSize(imageDimension);
         colonne.add(boutonModifierClient);
-        boutonAjouterClient = VueApplication.creerBoutonAjouter();
-        colonne.add(boutonAjouterClient);
-        onClick();
+        JButton ajout = VueApplication.creerBoutonAjouter();
+        colonne.add(ajout);
+        boutonModifierClient.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                edition = (medecinView.isEditable()) ? true : false;
+                if (edition) medecinView.setEdition();
+                else medecinView.saveEidtion();
+            }
+        });
+        ajout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //todo: implementer pages
+                JOptionPane.showMessageDialog(null, "Unimplemented yet", "TODO:", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
         return colonne;
     }
     // </editor-fold>
     //****************************************************************************************************************//
-    boolean edition = false;
-    private void onClick() {
-        boutonModifierClient.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                edition = (clientView.isEditable()) ? true : false;
-                if (edition) clientView.setEdition();
-                else clientView.saveEdition();
-            }
-        });
-        boutonAjouterClient.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ClientView addclientView = new ClientView();
-                addclientView.setClient(new Client());
-                addclientView.setEdition();
-                CustomOptionPane customOptionPane = new CustomOptionPane(addclientView);
-                customOptionPane.setValidateListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        Client client = clientView.getClient();
-                        clientView.reverseClient();
-                        DataSource.CLIENTS.add(addclientView.getClient());
-                    }
-                });
-                //CustomOptionPane.showConfirmDialog(null, addclientView, "Ajouter Client", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-                customOptionPane.showCustomDialog("Titre Personnalisé");
-            }
-        });
-    }
 }

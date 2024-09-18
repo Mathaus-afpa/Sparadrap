@@ -75,4 +75,10 @@ public class Medicament {
     }
     // </editor-fold>
     //****************************************************************************************************************//
+
+
+    @Override
+    public String toString() {
+        return this.nom;
+    }
 }

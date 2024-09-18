@@ -1,5 +1,7 @@
 package sparadrap.models.submodels;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 /**
  * [Client] - class
  * @author Mathaus
@@ -20,6 +22,44 @@ public class Client extends Personne {
     // <editor-fold defaultstate="collapsed" desc="Proprietes">
     private Date dateDeNaissance;
     private int numeroSecuriteSociale;
+
+    public Mutuelle getMutuelle() {
+        return mutuelle;
+    }
+
+    public void setMutuelle(Mutuelle mutuelle) {
+        this.mutuelle = mutuelle;
+    }
+
+    private Mutuelle mutuelle = null;
+
+    public Medecin getReferent() {
+        return referent;
+    }
+
+    public void setReferent(Medecin referent) {
+        this.referent = referent;
+    }
+
+    private Medecin referent = null;
+
+    public List<Medecin> getSpecialiste() {
+        return specialiste;
+    }
+
+    public void addSpecialiste(Medecin specialiste) {
+        this.specialiste.add(specialiste);
+    }
+
+    public void removeSpecialiste(Medecin specialiste) {
+        this.specialiste.remove(specialiste);
+    }
+
+    public int lengthSpecialiste() {
+        return this.specialiste.size();
+    }
+
+    private List<Medecin> specialiste = new ArrayList<>();
     // </editor-fold>
     //****************************************************************************************************************//
     // <editor-fold defaultstate="collapsed" desc="Getters">

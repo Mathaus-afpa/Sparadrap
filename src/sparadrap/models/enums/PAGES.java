@@ -7,5 +7,6 @@ public enum PAGES {
     ACCUEIL,
     ACHATS,
     CLIENTS,
-    HISTORIQUES
+    HISTORIQUES,
+    MEDECINS
 }

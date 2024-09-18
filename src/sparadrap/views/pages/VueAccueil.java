@@ -128,7 +128,7 @@ public class VueAccueil extends JPanel {
         panel.setBackground(new Color(255, 201, 39));
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(creerBoutons("CLIENTS", PAGES.CLIENTS));
-        panel.add(creerBoutons("MEDECINS", null));
+        panel.add(creerBoutons("MEDECINS", PAGES.MEDECINS));
         panneauDonnees.add(panel);
         return panneauDonnees;
     }

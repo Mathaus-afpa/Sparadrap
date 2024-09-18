@@ -1,5 +1,5 @@
 package sparadrap.models.submodels;
-import java.util.Date;
+import java.util.*;
 /**
  * [Achat] - class
  * @author Mathaus
@@ -9,6 +9,7 @@ public class Achat {
     // <editor-fold defaultstate="collapsed" desc="Proprietes">
     private Date dateAchat;
     private boolean prescription;
+    private Map<Medicament, Integer> medicaments = new HashMap<>();
     private int numeroFacture;
     // </editor-fold>
     //****************************************************************************************************************//
@@ -59,5 +60,26 @@ public class Achat {
         this.numeroFacture = numeroFacture;
     }
     // </editor-fold>
+    public final void setMedicaments(Map<Medicament, Integer> medicaments) {
+        this.medicaments = medicaments;
+    }
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for (Map.Entry<Medicament, Integer> entry : medicaments.entrySet()) {
+            Medicament medicament = entry.getKey();
+            Integer quantity = entry.getValue();
+            result.append(quantity).append(" x ").append(medicament.getNom()).append(" ");
+        }
+        return result.toString();
+    }
+    public float calcul() {
+        float result = 0;
+        for (Map.Entry<Medicament, Integer> entry : medicaments.entrySet()) {
+            Medicament medicament = entry.getKey();
+            Integer quantity = entry.getValue();
+            result += medicament.getPrix() * quantity;
+        }
+        return Math.round(result * 100.0f) / 100.0f;
+    }
     //****************************************************************************************************************//
 }

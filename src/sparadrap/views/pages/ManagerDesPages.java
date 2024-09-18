@@ -25,6 +25,7 @@ public class ManagerDesPages {
         pages.put(PAGES.ACHATS, VueAchats.getInstance());
         pages.put(PAGES.CLIENTS, VueClients.getInstance());
         pages.put(PAGES.HISTORIQUES, VueHistoriques.getInstance());
+        pages.put(PAGES.MEDECINS, VueMedecins.getInstance());
     }
     JPanel currentPanel = pages.get(PAGES.ACCUEIL);
     // </editor-fold>
