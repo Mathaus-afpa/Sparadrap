@@ -1,0 +1,12 @@
+[submodule "SparadrapSwing"]
+	path = SparadrapSwing
+	url = https://github.com/Mathaus-afpa/SparadrapSwing.git
+[submodule "UniversalJSON"]
+	path = UniversalJSON
+	url = https://github.com/Mathaus-afpa/UniversalJSON.git
+[submodule "SparadrapDAO"]
+	path = SparadrapDAO
+	url = https://github.com/Mathaus-afpa/SparadrapDAO.git
+[submodule "SparadrapModels"]
+	path = SparadrapModels
+	url = https://github.com/Mathaus-afpa/SparadrapModels.git
